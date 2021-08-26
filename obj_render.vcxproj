@@ -189,7 +189,9 @@
     <Library Include="lib\Release\freeglut_static.lib" />
   </ItemGroup>
   <ItemGroup>
-    <Object Include="res\drill.obj" />
+    <None Include="res\drill.obj">
+      <FileType>Document</FileType>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

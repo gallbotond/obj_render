@@ -94,6 +94,9 @@
     <None Include="res\drill.mtl">
       <Filter>Resource Files\materials</Filter>
     </None>
+    <None Include="res\drill.obj">
+      <Filter>Resource Files\objects</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="object.log">
@@ -113,10 +116,5 @@
     <Library Include="lib\Release\freeglut_static.lib">
       <Filter>Resource Files\lib\Release</Filter>
     </Library>
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="res\drill.obj">
-      <Filter>Resource Files\objects</Filter>
-    </Object>
   </ItemGroup>
 </Project>

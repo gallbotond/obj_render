@@ -14,13 +14,14 @@ struct vec3
 
 struct face
 {
-	char* mat_name = __nullptr;
+	int mat_no = 0;
 	vector<vector<int>> n;
 };
 
 struct material
 {
-	char* mat_name = nullptr;
+	char* mat_name = __nullptr;
+	int mat_no = 0;
 	float Ns = 0;
 	vec3 Ka = vec3(), Kd = vec3(), Ks = vec3(), Ke = vec3();
 	float Ni = 0;
@@ -34,6 +35,7 @@ struct wavefront
 	vector<vec3> vn;
 	vector<face> f;
 	vector<material> m;
+	void centralize();
 };
 
 class object
@@ -52,7 +54,6 @@ public:
 
 	object();
 	~object();
-
 };
 
 #endif // !OBJECT_H

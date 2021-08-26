@@ -172,12 +172,14 @@ void object::addObject(const char* filename)
 
 	char* nbuf = new char[1000];
 
-	char* mat_cur = nullptr;
+	int mat_cur = 0;
 
 	for (std::string ch; !file.eof(); file >> ch) {
 		if (ch == "usemtl") {
 			file.getline(nbuf, 100);
-			mat_cur = nbuf;
+			for (unsigned long i = 0; i < obj[obj_count].m.size(); i++) {
+				if (!strcmp(obj[obj_count].m[i].mat_name, nbuf))mat_cur = i;
+			}
 			nbuf = new char[1000];
 			continue;
 		}
@@ -206,9 +208,8 @@ void object::addObject(const char* filename)
 		switch (ch[0]) {
 		case 'f':
 			obj[obj_count].f << ext_face(file);
-			if (mat_cur != nullptr) {
-				obj[obj_count].f[obj[obj_count].f.size() - 1].mat_name = new char[strlen(mat_cur + 1)];
-				strcpy(obj[obj_count].f[obj[obj_count].f.size() - 1].mat_name, mat_cur);
+			if (mat_cur != 0) {
+				obj[obj_count].f[obj[obj_count].f.size() - 1].mat_no = mat_cur;
 			}
 			break;
 		case 'v':
@@ -239,6 +240,8 @@ void object::addObject(const char* filename)
 	}
 
 	file.close();
+
+	// obj[obj_count].centralize();
 
 	log("\t -> vertices : ");
 	if (obj[obj_count].v.size() != 1)log(obj[obj_count].v.size() - 1);
@@ -347,4 +350,24 @@ face ext_face(std::ifstream& file) {
 	}
 
 	return f;
+}
+
+void wavefront::centralize() {
+	vec3 min = vec3(), max = vec3();
+
+	for (unsigned int i = 0; i < v.size(); i++) {
+		if (v[i].x < min.x)min.x = v[i].x;
+		if (v[i].x > max.x)max.x = v[i].x;
+		if (v[i].z < min.x)min.z = v[i].z;
+		if (v[i].z > max.x)max.z = v[i].z;
+	}
+
+	vec3 diff = vec3();
+	diff.x = (max.x + min.x) / 2.0f;
+	diff.z = (max.z + min.z) / 2.0f;
+
+	for (unsigned int i = 0; i < v.size(); i++) {
+		v[i].x -= diff.x;
+		v[i].z += diff.z;
+	}
 }

@@ -10,8 +10,10 @@ POINT cp1, cp2;
 bool clicked = false;
 
 float zoom = -60;
+float actualzoom;
 
-float x = 0, y = 0;
+float x = 60, y = 30;
+float actualx, actualy;
 bool wireframe = false;
 
 void display() {
@@ -35,9 +37,14 @@ void display() {
 	glEnd();
 
 	glColor3f(0, 0, 0);
-	glTranslatef(0, 0, zoom);
-	glRotatef(y / 2.0f, 1, 0,0);
-	glRotatef(x / 2.0f, 0, 1, 0);
+	glTranslatef(0, 0, actualzoom);
+	glRotatef(actualy / 2.0f, 1, 0,0);
+	glRotatef(actualx / 2.0f, 0, 1, 0);
+
+	actualzoom += (zoom - actualzoom) / 8.0f;
+
+	actualx += (x - actualx) / 4.0f;
+	actualy += (y - actualy) / 4.0f;
 
 	glBegin(GL_LINES);
 	{
@@ -60,8 +67,13 @@ void display() {
 		for (unsigned long j = 0; j < objs.obj[i].f.size(); j++) {
 			
 			if (!wireframe) {
+				glColor4f(
+					objs.obj[i].m[objs.obj[i].f[j].mat_no].Kd.r, 
+					objs.obj[i].m[objs.obj[i].f[j].mat_no].Kd.g, 
+					objs.obj[i].m[objs.obj[i].f[j].mat_no].Kd.b,
+					objs.obj[i].m[objs.obj[i].f[j].mat_no].d
+				);
 				glBegin(GL_POLYGON);
-				glColor3f(j/100000.0f, j/100000.0f, j/100000.0f);
 			}
 			else {
 				glBegin(GL_LINE_LOOP);
@@ -69,7 +81,11 @@ void display() {
 			}
 			{
 				for (unsigned long k = 0; k < objs.obj[i].f[j].n.size(); k++) {
-					glVertex3f(objs.obj[i].v[objs.obj[i].f[j].n[k][0]].x, objs.obj[i].v[objs.obj[i].f[j].n[k][0]].y, objs.obj[i].v[objs.obj[i].f[j].n[k][0]].z);
+					glVertex3f(
+						objs.obj[i].v[objs.obj[i].f[j].n[k][0]].x, 
+						objs.obj[i].v[objs.obj[i].f[j].n[k][0]].y, 
+						objs.obj[i].v[objs.obj[i].f[j].n[k][0]].z
+					);
 				}
 			}glEnd();
 		}
@@ -116,7 +132,7 @@ void resize(int w, int h) {
 }
 
 int main(int argc, char* argv[]) {
-	objs.addObject("res/drill.obj");
+	objs.addObject("res/StoneFort.obj");
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
