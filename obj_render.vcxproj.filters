@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Resource Files\logs">
+      <UniqueIdentifier>{f3b868b8-3e8c-4f39-a717-835f6dcce7cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\objects">
+      <UniqueIdentifier>{8a6fc3df-696a-487b-8cad-f289f0dc5968}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\materials">
+      <UniqueIdentifier>{5830c02e-5cad-46ef-b3a0-a13fb9740eef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\freeglut">
+      <UniqueIdentifier>{5ada1d2d-37fb-4f11-a35a-e128466f5d9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\lib">
+      <UniqueIdentifier>{a1b3ee95-20ec-446a-93b0-9f340789b677}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\lib\Debug">
+      <UniqueIdentifier>{04436c04-fb4b-4483-bdb2-be8586ebf910}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\lib\Release">
+      <UniqueIdentifier>{f4046749-f519-4a86-9c6c-98453556b961}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Include\GL\freeglut.h">
+      <Filter>Header Files\freeglut</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\GL\freeglut_ext.h">
+      <Filter>Header Files\freeglut</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\GL\freeglut_std.h">
+      <Filter>Header Files\freeglut</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\GL\freeglut_ucall.h">
+      <Filter>Header Files\freeglut</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\GL\glut.h">
+      <Filter>Header Files\freeglut</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\vector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\StoneFort.obj">
+      <Filter>Resource Files\objects</Filter>
+    </None>
+    <None Include="res\test_loading.obj">
+      <Filter>Resource Files\objects</Filter>
+    </None>
+    <None Include="res\StoneFort.mtl">
+      <Filter>Resource Files\materials</Filter>
+    </None>
+    <None Include="res\test_loading.mtl">
+      <Filter>Resource Files\materials</Filter>
+    </None>
+    <None Include="lib\Debug\freeglutd.exp">
+      <Filter>Resource Files\lib\Debug</Filter>
+    </None>
+    <None Include="lib\Release\freeglut.exp">
+      <Filter>Resource Files\lib\Release</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="object.log">
+      <Filter>Resource Files\logs</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="lib\Debug\freeglut_staticd.lib">
+      <Filter>Resource Files\lib\Debug</Filter>
+    </Library>
+    <Library Include="lib\Debug\freeglutd.lib">
+      <Filter>Resource Files\lib\Debug</Filter>
+    </Library>
+    <Library Include="lib\Release\freeglut.lib">
+      <Filter>Resource Files\lib\Release</Filter>
+    </Library>
+    <Library Include="lib\Release\freeglut_static.lib">
+      <Filter>Resource Files\lib\Release</Filter>
+    </Library>
+  </ItemGroup>
+</Project>
