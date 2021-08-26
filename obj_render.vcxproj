@@ -168,6 +168,7 @@
   <ItemGroup>
     <None Include="lib\Debug\freeglutd.exp" />
     <None Include="lib\Release\freeglut.exp" />
+    <None Include="res\drill.mtl" />
     <None Include="res\StoneFort.mtl" />
     <None Include="res\StoneFort.obj">
       <FileType>Document</FileType>
@@ -176,6 +177,7 @@
     <None Include="res\test_loading.obj">
       <FileType>Document</FileType>
     </None>
+    <None Include="x64\Release\freeglut.dll" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="object.log" />
@@ -185,6 +187,9 @@
     <Library Include="lib\Debug\freeglut_staticd.lib" />
     <Library Include="lib\Release\freeglut.lib" />
     <Library Include="lib\Release\freeglut_static.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="res\drill.obj" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

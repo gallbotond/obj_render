@@ -34,6 +34,9 @@
     <Filter Include="Resource Files\lib\Release">
       <UniqueIdentifier>{f4046749-f519-4a86-9c6c-98453556b961}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\dlls">
+      <UniqueIdentifier>{f6cf32b0-9ca0-45a1-8ed7-6c1837e5ee0a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -85,6 +88,12 @@
     <None Include="lib\Release\freeglut.exp">
       <Filter>Resource Files\lib\Release</Filter>
     </None>
+    <None Include="x64\Release\freeglut.dll">
+      <Filter>Resource Files\dlls</Filter>
+    </None>
+    <None Include="res\drill.mtl">
+      <Filter>Resource Files\materials</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="object.log">
@@ -104,5 +113,10 @@
     <Library Include="lib\Release\freeglut_static.lib">
       <Filter>Resource Files\lib\Release</Filter>
     </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="res\drill.obj">
+      <Filter>Resource Files\objects</Filter>
+    </Object>
   </ItemGroup>
 </Project>
