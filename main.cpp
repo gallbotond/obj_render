@@ -20,10 +20,7 @@ void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	if (clicked) {
-		x += (float)((float)cp2.x - (float)cp1.x);
-		y += (float)((float)cp2.y - (float)cp1.y);
-	}
+	// BACKGROUND COLOR using of QUADS
 
 	glBegin(GL_QUADS);
 	{
@@ -41,10 +38,7 @@ void display() {
 	glRotatef(actualy / 2.0f, 1, 0,0);
 	glRotatef(actualx / 2.0f, 0, 1, 0);
 
-	actualzoom += (zoom - actualzoom) / 8.0f;
-
-	actualx += (x - actualx) / 4.0f;
-	actualy += (y - actualy) / 4.0f;
+	// X, Y, Z lines for reference
 
 	glBegin(GL_LINES);
 	{
@@ -62,55 +56,22 @@ void display() {
 	}
 	glEnd();
 
-	for (unsigned long i = 0; i < objs.count(); i++) {
-		int m = 0;
-		for (unsigned long j = 0; j < objs.obj[i].f.size(); j++) {
-			
-			if (!wireframe) {
-				glColor4f(
-					objs.obj[i].m[objs.obj[i].f[j].mat_no].Kd.r, 
-					objs.obj[i].m[objs.obj[i].f[j].mat_no].Kd.g, 
-					objs.obj[i].m[objs.obj[i].f[j].mat_no].Kd.b,
-					objs.obj[i].m[objs.obj[i].f[j].mat_no].d
-				);
-				glBegin(GL_POLYGON);
-			}
-			else {
-				glBegin(GL_LINE_LOOP);
-				glColor3f(0, 0, 1);
-			}
-			{
-				for (unsigned long k = 0; k < objs.obj[i].f[j].n.size(); k++) {
-					glVertex3f(
-						objs.obj[i].v[objs.obj[i].f[j].n[k][0]].x, 
-						objs.obj[i].v[objs.obj[i].f[j].n[k][0]].y, 
-						objs.obj[i].v[objs.obj[i].f[j].n[k][0]].z
-					);
-				}
-			}glEnd();
-		}
-	}
+	//objs.setCurrent(0);				// changing active object in library
+
+	objs.renderObject();			// calling render function in from object class
 
 	glutSwapBuffers();
-
-	GetCursorPos(&cp1);
-	Sleep(1000 / 60);
-	GetCursorPos(&cp2);
-	if (clicked) {
-		if (cp2.y == 0)SetCursorPos(cp2.x, GetSystemMetrics(SM_CYSCREEN) - 1);
-		if (cp2.y >= GetSystemMetrics(SM_CYSCREEN) - 1)SetCursorPos(cp2.x, 1);
-		if (cp2.x == 0)SetCursorPos(GetSystemMetrics(SM_CXSCREEN) - 1, cp2.y);
-		if (cp2.x >= GetSystemMetrics(SM_CXSCREEN) - 1)SetCursorPos(1, cp2.y);
-	}
-
-	glutPostRedisplay();
 }
 
 void mouse(int button, int state, int x, int y) {
 	if (!state && button == GLUT_MIDDLE_BUTTON)clicked = true;
 	else clicked = false;
 
-	if (!state && button == GLUT_RIGHT_BUTTON)wireframe ? wireframe = false : wireframe = true;
+	if (!state && button == GLUT_RIGHT_BUTTON)objs.obj[objs.getCurrent()].wireframe ? objs.obj[objs.getCurrent()].wireframe = false : objs.obj[objs.getCurrent()].wireframe = true;
+	if (!state && button == GLUT_LEFT_BUTTON) {
+		if (objs.getCurrent() < objs.count() - 1)objs.setCurrent(objs.getCurrent() + 1);
+		else objs.setCurrent(0);
+	}
 
 	glutPostRedisplay();
 }
@@ -131,19 +92,51 @@ void resize(int w, int h) {
 	glClearColor(.2f, .3f, .2f, 1.0f);
 }
 
+void timer(int) {
+	GetCursorPos(&cp1);
+
+	glutTimerFunc(1000 / 60, timer, 0);
+
+	if (clicked) {
+		if (cp2.y == 0)SetCursorPos(cp2.x, GetSystemMetrics(SM_CYSCREEN) - 2);
+		if (cp2.y >= GetSystemMetrics(SM_CYSCREEN) - 1)SetCursorPos(cp2.x, 1);
+		if (cp2.x == 0)SetCursorPos(GetSystemMetrics(SM_CXSCREEN) - 2, cp2.y);
+		if (cp2.x >= GetSystemMetrics(SM_CXSCREEN) - 1)SetCursorPos(1, cp2.y);
+	}
+
+	if (clicked) {
+		x -= (float)(cp2.x - cp1.x);
+		y -= (float)(cp2.y - cp1.y);
+	}
+
+	actualzoom += (zoom - actualzoom) / 8.0f;
+
+	actualx += (x - actualx) / 4.0f;
+	actualy += (y - actualy) / 4.0f;
+
+	GetCursorPos(&cp2);
+
+	glutPostRedisplay();
+}
+
 int main(int argc, char* argv[]) {
-	objs.addObject("res/StoneFort.obj");
+	objs.addObject("res/StoneFort.obj", 10);
+	objs.addObject("res/test_loading.obj", 10);
+	objs.addObject("res/drill.obj", 10);
+	objs.addObject("res/Piramyda1.obj", 10);
+	objs.addObject("res/House2.obj", 1000);
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
 	glutInitWindowPosition(100, 100);
-	glutInitWindowSize(800, 600);
+	glutInitWindowSize(600, 500);
 
 	int window = glutCreateWindow("MAIN_WINDOW");
 
 	glutDisplayFunc(display);
 	glutMouseFunc(mouse);
 	glutMouseWheelFunc(mouseWheel);
+	glutTimerFunc(0, timer, 0);
 	glutReshapeFunc(resize);
 
 	glEnable(GL_DEPTH_TEST);

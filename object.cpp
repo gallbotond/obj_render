@@ -126,7 +126,7 @@ void object::loadmtl(char* mtl_filename)
 	log("\n");
 }
 
-void object::addObject(const char* filename)
+void object::addObject(const char* filename, float scale)
 {
 	log("File loading -> ");
 	log(filename);
@@ -241,6 +241,8 @@ void object::addObject(const char* filename)
 
 	file.close();
 
+	obj[obj_count].scaleTo(scale);
+
 	// obj[obj_count].centralize();
 
 	log("\t -> vertices : ");
@@ -269,6 +271,15 @@ void object::addObject(const char* filename)
 unsigned long object::count()
 {
 	return obj_count;
+}
+
+void object::setCurrent(unsigned long cur) {
+	if (cur < obj_count)obj_current = cur;
+}
+
+unsigned long object::getCurrent()
+{
+	return obj_current;
 }
 
 object::object()
@@ -369,5 +380,57 @@ void wavefront::centralize() {
 	for (unsigned int i = 0; i < v.size(); i++) {
 		v[i].x -= diff.x;
 		v[i].z += diff.z;
+	}
+}
+
+void wavefront::scaleTo(float scale) {
+	float min = 0, max = 0;
+
+	for (unsigned int i = 0; i < v.size(); i++) {
+		if (v[i].x < min)min = v[i].x;
+		if (v[i].x > max)max = v[i].x;
+		if (v[i].y < min)min = v[i].y;
+		if (v[i].y > max)max = v[i].y;
+		if (v[i].z < min)min = v[i].z;
+		if (v[i].z > max)max = v[i].z;
+	}
+
+	float multiplier = ((max - min) / 2.0f) / scale;
+
+	for (unsigned int i = 0; i < v.size(); i++) {
+		v[i].x /= multiplier;
+		v[i].y /= multiplier;
+		v[i].z /= multiplier;
+	}
+}
+
+#include <GL/freeglut.h>
+
+void object::renderObject() {
+
+	for (unsigned long j = 0; j < obj[obj_current].f.size(); j++) {
+
+		if (!obj[obj_current].wireframe) {
+			glColor4f(
+				obj[obj_current].m[obj[obj_current].f[j].mat_no].Kd.r,
+				obj[obj_current].m[obj[obj_current].f[j].mat_no].Kd.g,
+				obj[obj_current].m[obj[obj_current].f[j].mat_no].Kd.b,
+				obj[obj_current].m[obj[obj_current].f[j].mat_no].d
+			);
+			glBegin(GL_POLYGON);
+		}
+		else {
+			glBegin(GL_LINE_LOOP);
+			glColor3f(0, 0, 1);
+		}
+		{
+			for (unsigned long k = 0; k < obj[obj_current].f[j].n.size(); k++) {
+				glVertex3f(
+					obj[obj_current].v[obj[obj_current].f[j].n[k][0]].x,
+					obj[obj_current].v[obj[obj_current].f[j].n[k][0]].y,
+					obj[obj_current].v[obj[obj_current].f[j].n[k][0]].z
+				);
+			}
+		}glEnd();
 	}
 }

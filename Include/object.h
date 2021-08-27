@@ -36,6 +36,9 @@ struct wavefront
 	vector<face> f;
 	vector<material> m;
 	void centralize();
+	void scaleTo(float);
+
+	bool wireframe = false;
 };
 
 class object
@@ -46,11 +49,15 @@ private:
 	char* mtllib;
 	template <typename T>
 	void log(T);
+	unsigned long obj_current = 0;
 
 public:
-	void addObject(const char*);
+	void addObject(const char*, float);
 	unsigned long count();
 	vector<wavefront> obj;
+	void renderObject();
+	void setCurrent(unsigned long);
+	unsigned long getCurrent();
 
 	object();
 	~object();

@@ -97,6 +97,18 @@
     <None Include="res\drill.obj">
       <Filter>Resource Files\objects</Filter>
     </None>
+    <None Include="res\House2.obj">
+      <Filter>Resource Files\objects</Filter>
+    </None>
+    <None Include="res\Piramyda1.obj">
+      <Filter>Resource Files\objects</Filter>
+    </None>
+    <None Include="res\House2.mtl">
+      <Filter>Resource Files\materials</Filter>
+    </None>
+    <None Include="res\Piramyda1.mtl">
+      <Filter>Resource Files\materials</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="object.log">
