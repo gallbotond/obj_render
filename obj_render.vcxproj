@@ -157,6 +157,7 @@
     <ClCompile Include="object.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\glut.h" />
     <ClInclude Include="Include\GL\freeglut.h" />
     <ClInclude Include="Include\GL\freeglut_ext.h" />
     <ClInclude Include="Include\GL\freeglut_std.h" />

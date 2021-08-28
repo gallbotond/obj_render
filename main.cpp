@@ -1,7 +1,7 @@
-#include <GL/freeglut.h>	// Freeglut (glut library)
 #include <iostream>
 #include <object.h>			// Own library "./Include/object.h"
 #include <vector.h>			// Own library "./Include/vector.h"
+#include <glut.h>			// Own library "./Include/glut.h"
 
 object objs;
 
@@ -119,6 +119,10 @@ void timer(int) {
 	glutPostRedisplay();
 }
 
+void keyBoard(unsigned char key, int x, int y) {
+	if (key == 27)exit(0);
+}
+
 int main(int argc, char* argv[]) {
 	objs.addObject("res/StoneFort.obj", 10);
 	objs.addObject("res/test_loading.obj", 10);
@@ -129,11 +133,13 @@ int main(int argc, char* argv[]) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
 	glutInitWindowPosition(100, 100);
-	glutInitWindowSize(600, 500);
+	glutInitWindowSize(600, 600);
 
 	int window = glutCreateWindow("MAIN_WINDOW");
+	//glutFullScreen();
 
 	glutDisplayFunc(display);
+	glutKeyboardFunc(keyBoard);
 	glutMouseFunc(mouse);
 	glutMouseWheelFunc(mouseWheel);
 	glutTimerFunc(0, timer, 0);
