@@ -117,6 +117,8 @@ void object::loadmtl(char* mtl_filename)
 
 	file.close();
 
+	obj[obj_count].mat_found = true;
+
 	log("\t -> materials : ");
 	if (obj[obj_count].m.size() != 0)log(obj[obj_count].m.size());
 	log("\n");
@@ -410,7 +412,7 @@ void object::renderObject() {
 
 	for (unsigned long j = 0; j < obj[obj_current].f.size(); j++) {
 
-		if (!obj[obj_current].wireframe) {
+		if (!obj[obj_current].wireframe && obj[obj_current].mat_found) {
 			glColor4f(
 				obj[obj_current].m[obj[obj_current].f[j].mat_no].Kd.r,
 				obj[obj_current].m[obj[obj_current].f[j].mat_no].Kd.g,

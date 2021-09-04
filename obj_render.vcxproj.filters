@@ -76,15 +76,6 @@
     <None Include="res\StoneFort.obj">
       <Filter>Resource Files\objects</Filter>
     </None>
-    <None Include="res\test_loading.obj">
-      <Filter>Resource Files\objects</Filter>
-    </None>
-    <None Include="res\StoneFort.mtl">
-      <Filter>Resource Files\materials</Filter>
-    </None>
-    <None Include="res\test_loading.mtl">
-      <Filter>Resource Files\materials</Filter>
-    </None>
     <None Include="lib\Debug\freeglutd.exp">
       <Filter>Resource Files\lib\Debug</Filter>
     </None>
@@ -93,12 +84,6 @@
     </None>
     <None Include="x64\Release\freeglut.dll">
       <Filter>Resource Files\dlls</Filter>
-    </None>
-    <None Include="res\drill.mtl">
-      <Filter>Resource Files\materials</Filter>
-    </None>
-    <None Include="res\drill.obj">
-      <Filter>Resource Files\objects</Filter>
     </None>
     <None Include="res\House2.obj">
       <Filter>Resource Files\objects</Filter>
@@ -110,6 +95,9 @@
       <Filter>Resource Files\materials</Filter>
     </None>
     <None Include="res\Piramyda1.mtl">
+      <Filter>Resource Files\materials</Filter>
+    </None>
+    <None Include="res\StoneFort.mtl">
       <Filter>Resource Files\materials</Filter>
     </None>
   </ItemGroup>

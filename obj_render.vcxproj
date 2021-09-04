@@ -169,15 +169,10 @@
   <ItemGroup>
     <None Include="lib\Debug\freeglutd.exp" />
     <None Include="lib\Release\freeglut.exp" />
-    <None Include="res\drill.mtl" />
     <None Include="res\House2.mtl" />
     <None Include="res\Piramyda1.mtl" />
     <None Include="res\StoneFort.mtl" />
     <None Include="res\StoneFort.obj">
-      <FileType>Document</FileType>
-    </None>
-    <None Include="res\test_loading.mtl" />
-    <None Include="res\test_loading.obj">
       <FileType>Document</FileType>
     </None>
     <None Include="x64\Release\freeglut.dll" />
@@ -190,11 +185,6 @@
     <Library Include="lib\Debug\freeglut_staticd.lib" />
     <Library Include="lib\Release\freeglut.lib" />
     <Library Include="lib\Release\freeglut_static.lib" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="res\drill.obj">
-      <FileType>Document</FileType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\House2.obj">

@@ -7,13 +7,15 @@ object objs;
 
 POINT cp1, cp2;
 
-bool clicked = false;
+struct MOUSE {
+	bool LMB = false, MMB = false, RMB = false;
+};
 
-float zoom = -60;
-float actualzoom;
+vec3 angle = { 60, 40, 0 }, translate = { 0, 0, -60 }, actual_angle, actual_translate;
 
-float x = 60, y = 30;
-float actualx, actualy;
+MOUSE clicked;
+bool editMode = true;
+
 bool wireframe = false;
 
 void display() {
@@ -34,9 +36,9 @@ void display() {
 	glEnd();
 
 	glColor3f(0, 0, 0);
-	glTranslatef(0, 0, actualzoom);
-	glRotatef(actualy / 2.0f, 1, 0,0);
-	glRotatef(actualx / 2.0f, 0, 1, 0);
+	glTranslatef(actual_translate.x, actual_translate.y, actual_translate.z);
+	glRotatef(actual_angle.y / 2.0f, 1, 0,0);
+	glRotatef(actual_angle.x / 2.0f, 0, 1, 0);
 
 	// X, Y, Z lines for reference
 
@@ -64,11 +66,13 @@ void display() {
 }
 
 void mouse(int button, int state, int x, int y) {
-	if (!state && button == GLUT_MIDDLE_BUTTON)clicked = true;
-	else clicked = false;
+	if (!state && button == GLUT_RIGHT_BUTTON && editMode)clicked.RMB = true;
+	else clicked.RMB = false;
 
-	if (!state && button == GLUT_RIGHT_BUTTON)objs.obj[objs.getCurrent()].wireframe ? objs.obj[objs.getCurrent()].wireframe = false : objs.obj[objs.getCurrent()].wireframe = true;
-	if (!state && button == GLUT_LEFT_BUTTON) {
+	if (!state && button == GLUT_MIDDLE_BUTTON && editMode)clicked.MMB = true;
+	else clicked.MMB = false;
+
+	if (!state && button == GLUT_LEFT_BUTTON && editMode) {
 		if (objs.getCurrent() < objs.count() - 1)objs.setCurrent(objs.getCurrent() + 1);
 		else objs.setCurrent(0);
 	}
@@ -77,8 +81,9 @@ void mouse(int button, int state, int x, int y) {
 }
 
 void mouseWheel(int, int direction, int x, int y) {
-	if (direction > 0)zoom /= 1.1f;
-	else zoom *= 1.1f;
+	if (editMode)
+		if (direction > 0)translate.z /= 1.1f;
+		else translate.z *= 1.1f;
 
 	glutPostRedisplay();
 }
@@ -97,22 +102,33 @@ void timer(int) {
 
 	glutTimerFunc(1000 / 60, timer, 0);
 
-	if (clicked) {
-		if (cp2.y == 0)SetCursorPos(cp2.x, GetSystemMetrics(SM_CYSCREEN) - 2);
-		if (cp2.y >= GetSystemMetrics(SM_CYSCREEN) - 1)SetCursorPos(cp2.x, 1);
-		if (cp2.x == 0)SetCursorPos(GetSystemMetrics(SM_CXSCREEN) - 2, cp2.y);
-		if (cp2.x >= GetSystemMetrics(SM_CXSCREEN) - 1)SetCursorPos(1, cp2.y);
+	if (editMode) {
+		if (clicked.RMB) {
+			if (cp2.y == 0)SetCursorPos(cp2.x, GetSystemMetrics(SM_CYSCREEN) - 2);
+			if (cp2.y >= GetSystemMetrics(SM_CYSCREEN) - 1)SetCursorPos(cp2.x, 1);
+			if (cp2.x == 0)SetCursorPos(GetSystemMetrics(SM_CXSCREEN) - 2, cp2.y);
+			if (cp2.x >= GetSystemMetrics(SM_CXSCREEN) - 1)SetCursorPos(1, cp2.y);
+			angle.x -= (float)(cp2.x - cp1.x);
+			angle.y -= (float)(cp2.y - cp1.y);
+		}
+
+		if (clicked.MMB) {
+			translate.x += (float)(cp2.x - cp1.x) / 10.0f * (actual_translate.z / 100.0f);
+			translate.y -= (float)(cp2.y - cp1.y) / 10.0f * (actual_translate.z / 100.0f);
+		}
+
+		actual_translate.x += (translate.x - actual_translate.x) / 4.0f;
+		actual_translate.y += (translate.y - actual_translate.y) / 4.0f;
+		actual_translate.z += (translate.z - actual_translate.z) / 8.0f;
+
+		actual_angle.x += (angle.x - actual_angle.x) / 4.0f;
+		actual_angle.y += (angle.y - actual_angle.y) / 4.0f;
 	}
-
-	if (clicked) {
-		x -= (float)(cp2.x - cp1.x);
-		y -= (float)(cp2.y - cp1.y);
+	else {
+		if ((int)actual_translate.z != (int)0) {
+			actual_translate.z -= (actual_translate.z) / 5.0f;
+		}
 	}
-
-	actualzoom += (zoom - actualzoom) / 8.0f;
-
-	actualx += (x - actualx) / 4.0f;
-	actualy += (y - actualy) / 4.0f;
 
 	GetCursorPos(&cp2);
 
@@ -121,12 +137,23 @@ void timer(int) {
 
 void keyBoard(unsigned char key, int x, int y) {
 	if (key == 27)exit(0);
+	if (key == 'p') {
+		editMode ? glutSetCursor(GLUT_CURSOR_NONE) : glutSetCursor(GLUT_CURSOR_INHERIT);
+		editMode ? editMode = false : editMode = true;
+	}
+	if(key == 'w')objs.obj[objs.getCurrent()].wireframe ? objs.obj[objs.getCurrent()].wireframe = false : objs.obj[objs.getCurrent()].wireframe = true;
+	if (key == '.') {
+		angle.x = 60;
+		angle.y = 40;
+		angle.z = 0;
+		translate.x = 0;
+		translate.y = 0;
+		translate.z = -60;
+	}
 }
 
 int main(int argc, char* argv[]) {
 	objs.addObject("res/StoneFort.obj", 10);
-	objs.addObject("res/test_loading.obj", 10);
-	objs.addObject("res/drill.obj", 10);
 	objs.addObject("res/Piramyda1.obj", 10);
 	objs.addObject("res/House2.obj", 1000);
 

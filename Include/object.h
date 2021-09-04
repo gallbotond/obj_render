@@ -38,6 +38,7 @@ struct wavefront
 	void centralize();
 	void scaleTo(float);
 
+	bool mat_found = false;
 	bool wireframe = false;
 };
 
