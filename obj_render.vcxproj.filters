@@ -100,6 +100,9 @@
     <None Include="res\StoneFort.mtl">
       <Filter>Resource Files\materials</Filter>
     </None>
+    <None Include="1.mtl">
+      <Filter>Resource Files\materials</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="object.log">
@@ -119,5 +122,10 @@
     <Library Include="lib\Release\freeglut_static.lib">
       <Filter>Resource Files\lib\Release</Filter>
     </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="1.obj">
+      <Filter>Resource Files\objects</Filter>
+    </Object>
   </ItemGroup>
 </Project>
